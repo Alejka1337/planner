@@ -1,0 +1,27 @@
+{% extends 'notes/base.html' %}
+{% block content %}
+
+{% block menu %}
+<a href="/">Посмотреть список задач</a>
+<br>
+{% endblock menu %}
+
+
+<h1>Здесь вы можете добавить задачу</h1>
+
+{% block addtask %}
+<form action="{% url 'add' %}" method="post">
+    {% csrf_token %}
+    <p>{{form.non_field_errors }}</p>
+
+    {% for f in form %}
+    <p><label for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+    <p>{{ f.errors }}</p>
+
+{% endfor %}
+<button type="submit">Добавить задачу</button>
+</form>
+<h2>Календарь на месяц</h2>
+{{ calendar|safe }}
+{% endblock addtask %}
+{% endblock content %}
