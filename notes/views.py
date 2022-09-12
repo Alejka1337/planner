@@ -4,6 +4,7 @@ from .models import Notes
 from .form import AddTask
 import calendar
 import datetime as dt
+from django.core.exceptions import ValidationError
 
 menu = {'title': 'Добавить задачу', 'url': 'add'}
 
@@ -30,6 +31,8 @@ def add_page(request):
         if form.is_valid():
             form.save()
             return redirect('home')
+        else:
+            form.add_error('task_date', ValidationError('Дата не может быть в прошлом'))
     else:
         form = AddTask()
 
